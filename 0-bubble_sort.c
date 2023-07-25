@@ -1,7 +1,7 @@
 #include "sort.h"
 
 /**
- * bubble_sort - Sorts an array of integers in ascending order using Bubble Sort.
+ * bubble_sort - Sorts an array of integers in ascending order
  *
  * @array: The array to sort.
  * @size: The length of the array.
