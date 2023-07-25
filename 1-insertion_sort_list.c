@@ -24,8 +24,8 @@ void swap_nodes(listint_t **h, listint_t **n1, listint_t *n2)
 
 
 /**
- * insertion_sort_list - Sorts a doubly linked list of integers 
- * in ascending
+ * insertion_sort_list - Sorts a doubly linked list of integers using the Insertion Sort algorithm.
+ *
  *
  * @list: Pointer to the head of the doubly linked list.
  */
