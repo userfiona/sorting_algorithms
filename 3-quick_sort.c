@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "sort.h"
 
 #define MIN_SIZE_FOR_INSERTION_SORT 10
