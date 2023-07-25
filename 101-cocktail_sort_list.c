@@ -1,80 +1,73 @@
 #include "sort.h"
 
 /**
- * dll_adj_swap - Swaps two adjacent nodes of a doubly linked list.
- * @list: A pointer to the doubly linked list to be sorted.
- * @left: The node closer to the head, right->prev.
- * @right: The node closer to the tail, left->next.
+ * quick_sort - function that sorts an array of integers
+ *              in ascending order using the Quick sort algorithm
+ * @array: array
+ * @size: array's size
+ * Return: void
  */
-void dll_adj_swap(listint_t **list, listint_t *left, listint_t *right)
+void quick_sort(int *array, size_t size)
 {
-	listint_t *swap;
+	if (array == NULL || size < 2)
+		return;
 
-	if (left->prev)
-		left->prev->next = right;
-	else
-		*list = right;
-
-	if (right->next)
-		right->next->prev = left;
-
-	right->prev = left->prev;
-	left->prev = right;
-	swap = right;
-	left->next = right->next;
-	swap->next = left;
-
-	print_list(*list);
+	quick_s(array, 0, size - 1, size);
 }
 
 /**
- * cocktail_sort_list - Sorts a doubly linked list of integers in ascending
- *                      order using the Cocktail shaker sort algorithm.
- * @list: A pointer to the doubly linked list to be sorted.
+ * partition - partition
+ * @array: array
+ * @lo: lower
+ * @hi: higher
+ * @size: array's size
+ * Return: i
  */
-void cocktail_sort_list(listint_t **list)
+int partition(int *array, int lo, int hi, size_t size)
 {
-	bool swapped_f, swapped_b;
-	int shake_range = 1000000, checks;
-	listint_t *temp;
+	int i = lo - 1, j = lo;
+	int pivot = array[hi], aux = 0;
 
-	if (!list || !(*list) || !(*list)->next)
-		return;
-
-	temp = *list;
-	do {
-		swapped_f = swapped_b = false;
-		for (checks = 0; temp->next && checks < shake_range; checks++)
+	for (; j < hi; j++)
+	{
+		if (array[j] < pivot)
 		{
-			if (temp->next->n < temp->n)
+			i++;
+			if (array[i] != array[j])
 			{
-				dll_adj_swap(list, temp, temp->next);
-				swapped_f = true;
+				aux = array[i];
+				array[i] = array[j];
+				array[j] = aux;
+				print_array(array, size);
 			}
-			else
-				temp = temp->next;
 		}
+	}
+	if (array[i + 1] != array[hi])
+	{
+		aux = array[i + 1];
+		array[i + 1] = array[hi];
+		array[hi] = aux;
+		print_array(array, size);
+	}
+	return (i + 1);
+}
 
-		if (!temp->next)  /* First loop, measuring list */
-			shake_range = checks;
+/**
+ * quick_s - quick sort
+ * @array: given array
+ * @lo: lower
+ * @hi:higher
+ * @size: array's size
+ * Return: void
+ */
+void quick_s(int *array, int lo, int hi, size_t size)
+{
+	int pivot;
 
-		if (swapped_f)
-			temp = temp->prev;
-
-		shake_range--;
-
-		for (checks = 0; temp->prev && checks < shake_range; checks++)
-		{
-			if (temp->n < temp->prev->n)
-			{
-				dll_adj_swap(list, temp->prev, temp);
-				swapped_b = true;
-			}
-			else
-				temp = temp->prev;
-		}
-
-		if (swapped_b)
-			temp = temp->next;
-	} while (swapped_f || swapped_b);
+	if (lo < hi)
+	{
+		pivot = partition(array, lo, hi, size);
+		quick_s(array, lo, pivot - 1, size);
+		quick_s(array, pivot + 1, hi, size);
+	}
 }
