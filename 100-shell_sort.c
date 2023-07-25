@@ -1,36 +1,39 @@
 #include "sort.h"
-
 /**
-  * shell_sort - A function tat sorts an array usin shell algorithm.
-  * @array: The array to sort.
-  * @size: The length of the array.
-  * Return: Nothing.
-  */
+ * shell_sort -  sorts an array of integers in
+ * ascending order using the Shell sort algorithm,
+ * using the Knuth sequence
+ * @array: pointer to array
+ * @size: size of the array
+ **/
 void shell_sort(int *array, size_t size)
 {
-	unsigned int i = 0, j = 0, gap = 0;
-	int aux = 0;
+	size_t kunth[1000], k = 0, j = 0, i;
+	int n, j2;
 
-	if (array == NULL || size < 2)
+	if (!array)
 		return;
-
-	while (gap < size / 3)
-		gap = gap * 3 + 1;
-
-	for (; gap > 0; gap = (gap - 1) / 3)
+	while (j * 3 + 1 < size)
 	{
-		for (i = gap; i < size; i++)
+		kunth[k] = j * 3 + 1;
+		j = kunth[k++];
+	}
+	for (i = 0; i < k; i++)
+	{
+		for (j = 0; j < size; j++)
 		{
-			aux = array[i];
-			for (j = i; j >= gap && array[j - gap] > aux;
-					j -= gap)
+			if ((j + kunth[k - i - 1]) > size - 1)
+				break;
+			j2 = j;
+			while (array[j2] > array[j2 + kunth[k - i - 1]])
 			{
-				if (array[j] != array[j - gap])
-					array[j] = array[j - gap];
+				n = array[j2];
+				array[j2] =  array[j2 + kunth[k - i - 1]];
+				array[j2 + kunth[k - i - 1]] = n;
+				j2 = j2 - kunth[k - i - 1];
+				if (j2 < 0)
+					break;
 			}
-			if (array[j] != aux)
-				array[j] = aux;
-
 		}
 		print_array(array, size);
 	}
