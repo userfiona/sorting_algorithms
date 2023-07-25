@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "sort.h"
 
 #define MIN_SIZE_FOR_INSERTION_SORT 10
@@ -11,11 +9,11 @@
  */
 void swap_ints(int *a, int *b)
 {
-	int tmp;
+        int tmp;
 
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
+        tmp = *a;
+        *a = *b;
+        *b = tmp;
 }
 
 /**
@@ -30,29 +28,29 @@ void swap_ints(int *a, int *b)
  */
 int lomuto_partition(int *array, size_t size, int left, int right)
 {
-	int *pivot, above, below;
+        int *pivot, above, below;
 
-	pivot = array + right;
-	for (above = below = left; below < right; below++)
-	{
-		if (array[below] < *pivot)
-		{
-			if (above < below)
-			{
-				swap_ints(array + below, array + above);
-				print_array(array, size);
-			}
-			above++;
-		}
-	}
+        pivot = array + right;
+        for (above = below = left; below < right; below++)
+        {
+                if (array[below] < *pivot)
+                {
+                        if (above < below)
+                        {
+                                swap_ints(array + below, array + above);
+                                print_array(array, size);
+                        }
+                        above++;
+                }
+        }
 
-	if (array[above] > *pivot)
-	{
-		swap_ints(array + above, pivot);
-		print_array(array, size);
-	}
+        if (array[above] > *pivot)
+        {
+                swap_ints(array + above, pivot);
+                print_array(array, size);
+        }
 
-	return (above);
+        return (above);
 }
 
 /**
@@ -66,31 +64,31 @@ int lomuto_partition(int *array, size_t size, int left, int right)
  */
 void lomuto_sort(int *array, size_t size, int left, int right)
 {
-	int part;
+        int part;
 
-	if (right - left > MIN_SIZE_FOR_INSERTION_SORT)
-	{
-		part = lomuto_partition(array, size, left, right);
-		lomuto_sort(array, size, left, part - 1);
-		lomuto_sort(array, size, part + 1, right);
-	}
-	else
-	{
-		int i, j, temp;
+        if (right - left > MIN_SIZE_FOR_INSERTION_SORT)
+        {
+                part = lomuto_partition(array, size, left, right);
+                lomuto_sort(array, size, left, part - 1);
+                lomuto_sort(array, size, part + 1, right);
+        }
+        else
+        {
+                int i, j, temp;
 
-		for (i = left + 1; i <= right; i++)
-		{
-			temp = array[i];
-			j = i - 1;
-			while (j >= left && array[j] > temp)
-			{
-				array[j + 1] = array[j];
-				j--;
-			}
-			array[j + 1] = temp;
-		}
-		print_array(array, size);
-	}
+                for (i = left + 1; i <= right; i++)
+                {
+                        temp = array[i];
+                        j = i - 1;
+                        while (j >= left && array[j] > temp)
+                        {
+                                array[j + 1] = array[j];
+                                j--;
+                        }
+                        array[j + 1] = temp;
+                }
+                print_array(array, size);
+        }
 }
 
 /**
@@ -104,8 +102,9 @@ void lomuto_sort(int *array, size_t size, int left, int right)
  */
 void quick_sort(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
-		return;
+        if (array == NULL || size < 2)
+                return;
 
-	lomuto_sort(array, size, 0, size - 1);
+        lomuto_sort(array, size, 0, size - 1);
 }
+~                                                
