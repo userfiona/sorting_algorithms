@@ -74,8 +74,8 @@ void lomuto_sort(int *array, size_t size, int left, int right)
 	}
 	else
 	{
-		/* Use Insertion Sort for small subarrays */
 		int i, j, temp;
+
 		for (i = left + 1; i <= right; i++)
 		{
 			temp = array[i];
